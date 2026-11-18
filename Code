@@ -1,119 +1,98 @@
+// Practical: Types of Inheritance in C++
 #include <iostream>
 using namespace std;
- 
-// ---------- Single and Multilevel inheritance (Vehicle -> Car -> ElectricCar) ----------
+
+// 1. SINGLE INHERITANCE: Animal -> Dog
+class Animal {
+public:
+    void eat() { cout << "Animal can eat" << endl; }
+};
+class Dog : public Animal {
+public:
+    void bark() { cout << "Dog can bark" << endl; }
+};
+
+// 2. MULTILEVEL INHERITANCE: Animal -> Mammal -> Cat
+class Mammal : public Animal {
+public:
+    void feedMilk() { cout << "Mammal feeds milk to babies" << endl; }
+};
+class Cat : public Mammal {
+public:
+    void meow() { cout << "Cat can meow" << endl; }
+};
+
+// 3. MULTIPLE INHERITANCE: Father + Mother -> Child
+class Father {
+public:
+    void height() { cout << "Child gets height from Father" << endl; }
+};
+class Mother {
+public:
+    void color() { cout << "Child gets eye color from Mother" << endl; }
+};
+class Child : public Father, public Mother { };
+
+// 4. HIERARCHICAL INHERITANCE: Vehicle -> Car, Bike
 class Vehicle {
 public:
-    void start() {
-        cout << "Vehicle is starting" << endl;
-    }
+    void start() { cout << "Vehicle started" << endl; }
 };
- 
-// Single inheritance: Car is derived from Vehicle
 class Car : public Vehicle {
 public:
-    void drive() {
-        cout << "Car is being driven on the road" << endl;
-    }
+    void wheels() { cout << "Car has 4 wheels" << endl; }
 };
- 
-// Multilevel inheritance: ElectricCar is derived from Car, which is derived from Vehicle
-class ElectricCar : public Car {
-public:
-    void charge() {
-        cout << "Electric car is charging its battery" << endl;
-    }
-};
- 
-// Hierarchical inheritance: Bike is also derived from Vehicle (like Car)
 class Bike : public Vehicle {
 public:
-    void ride() {
-        cout << "Bike is being ridden" << endl;
-    }
+    void wheels() { cout << "Bike has 2 wheels" << endl; }
 };
- 
-// ---------- Multiple inheritance (Display + Battery -> Tablet) ----------
-class Display {
+
+// 5. HYBRID INHERITANCE: Person -> Student, Employee -> TeachingAssistant
+// 'virtual' keeps only one copy of Person (solves the diamond problem)
+class Person {
 public:
-    void showScreen() {
-        cout << "Display shows the screen" << endl;
-    }
+    void showPerson() { cout << "I am a Person" << endl; }
 };
- 
-class Battery {
+class Student : virtual public Person {
 public:
-    void providePower() {
-        cout << "Battery supplies power" << endl;
-    }
+    void study() { cout << "I study" << endl; }
 };
- 
-class Tablet : public Display, public Battery {
+class Employee : virtual public Person {
 public:
-    void browse() {
-        cout << "Tablet browses the internet" << endl;
-    }
+    void work() { cout << "I work" << endl; }
 };
- 
-// ---------- Hybrid inheritance (Gadget -> Phone, Camera -> SmartPhone) ----------
-class Gadget {
-public:
-    void powerOn() {
-        cout << "Gadget is switched on" << endl;
-    }
-};
- 
-// virtual base class: only one copy of Gadget is shared
-class Phone : virtual public Gadget {
-public:
-    void call() {
-        cout << "Phone makes a call" << endl;
-    }
-};
- 
-class Camera : virtual public Gadget {
-public:
-    void capture() {
-        cout << "Camera captures a photo" << endl;
-    }
-};
- 
-class SmartPhone : public Phone, public Camera {
-public:
-    void callAndShoot() {
-        cout << "SmartPhone makes a call and captures photos" << endl;
-    }
-};
- 
+class TeachingAssistant : public Student, public Employee { };
+
 int main() {
-    cout << "--- 1. Single inheritance ---" << endl;
-    Car myCar;
-    myCar.start();
-    myCar.drive();
- 
-    cout << "\n--- 2. Multilevel inheritance ---" << endl;
-    ElectricCar eCar;
-    eCar.start();
-    eCar.drive();
-    eCar.charge();
- 
-    cout << "\n--- 3. Hierarchical inheritance ---" << endl;
-    Bike myBike;
-    myBike.start();
-    myBike.ride();
- 
-    cout << "\n--- 4. Multiple inheritance ---" << endl;
-    Tablet tab;
-    tab.showScreen();
-    tab.providePower();
-    tab.browse();
- 
-    cout << "\n--- 5. Hybrid inheritance ---" << endl;
-    SmartPhone smart;
-    smart.powerOn();
-    smart.call();
-    smart.capture();
-    smart.callAndShoot();
- 
+    cout << "--- Single Inheritance ---" << endl;
+    Dog d;
+    d.eat();
+    d.bark();
+
+    cout << "\n--- Multilevel Inheritance ---" << endl;
+    Cat c;
+    c.eat();
+    c.feedMilk();
+    c.meow();
+
+    cout << "\n--- Multiple Inheritance ---" << endl;
+    Child ch;
+    ch.height();
+    ch.color();
+
+    cout << "\n--- Hierarchical Inheritance ---" << endl;
+    Car car;
+    Bike bike;
+    car.start();
+    car.wheels();
+    bike.start();
+    bike.wheels();
+
+    cout << "\n--- Hybrid Inheritance ---" << endl;
+    TeachingAssistant ta;
+    ta.showPerson();
+    ta.study();
+    ta.work();
+
     return 0;
 }
